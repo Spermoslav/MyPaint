@@ -26,6 +26,8 @@ public:
     int getPenH();
 
     void clear();
+    void backDraw();
+    void nextDraw();
 
 private slots:
     void resizeEvent(QResizeEvent *e) override;

@@ -138,6 +138,22 @@ void Display::clear()
     repaint();
 }
 
+void Display::backDraw()
+{
+    if(deletedItems <= draw.size()) {
+        deletedItems++;
+        repaint();
+    }
+}
+
+void Display::nextDraw()
+{
+    if(deletedItems > 0) {
+        deletedItems--;
+        repaint();
+    }
+}
+
 
 DrawItem::DrawItem(int px, int py, int w, int h)
 {

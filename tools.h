@@ -23,6 +23,8 @@ private slots:
     void penWsliderMoved();
     void penHsliderMoved();
     void clearReleased();
+    void backDrawPBReleased();
+    void nextDrawPBReleased();
 
 private:
     Display *disp;
@@ -34,6 +36,8 @@ private:
     QLabel *penHlabel;
 
     QPushButton *clear;
+    QPushButton *backDrawPB;
+    QPushButton *nextDrawPB;
 };
 
 #endif // TOOLS_H
