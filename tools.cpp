@@ -20,6 +20,9 @@ Tools::Tools(QWidget *parent, Display *disp)
 
     penHlabel = new QLabel(this);
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
+
+    clear = new QPushButton("clear", this);
+
 }
 
 void Tools::resize()
@@ -28,6 +31,7 @@ void Tools::resize()
     penHslider->setGeometry(width() / 8, height() * 0.6, width() * 0.75, height() * 0.1);
     penWlabel->setGeometry(width() / 8, height() * 0.77, width() * 0.75, height() * 0.03);
     penHlabel->setGeometry(width() / 8, height() * 0.57, width() * 0.75, height() * 0.03);
+    clear->setGeometry(width() / 8, height() * 0.95, width() * 0.325, height() * 0.05);
 }
 
 void Tools::update()
