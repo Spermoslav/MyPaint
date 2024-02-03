@@ -22,7 +22,7 @@ Tools::Tools(QWidget *parent, Display *disp)
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
 
     clear = new QPushButton("clear", this);
-
+    connect(clear, &QPushButton::released, this, &Tools::clearReleased);
 }
 
 void Tools::resize()
@@ -52,4 +52,10 @@ void Tools::penHsliderMoved()
     disp->setPenH(penHslider->value());
     update();
     qDebug() << penHslider->value();
+}
+
+void Tools::clearReleased()
+{
+    disp->clear();
+
 }

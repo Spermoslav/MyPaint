@@ -131,6 +131,13 @@ int Display::getPenH()
     return penH;
 }
 
+void Display::clear()
+{
+    draw.clear();
+    deletedItems = 0;
+    repaint();
+}
+
 
 DrawItem::DrawItem(int px, int py, int w, int h)
 {

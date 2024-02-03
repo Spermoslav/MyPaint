@@ -25,6 +25,8 @@ public:
     int getPenW();
     int getPenH();
 
+    void clear();
+
 private slots:
     void resizeEvent(QResizeEvent *e) override;
     void mousePressEvent(QMouseEvent* event) override;

@@ -22,6 +22,7 @@ public:
 private slots:
     void penWsliderMoved();
     void penHsliderMoved();
+    void clearReleased();
 
 private:
     Display *disp;
