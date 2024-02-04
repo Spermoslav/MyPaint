@@ -17,9 +17,11 @@ Tools::Tools(QWidget *parent, Display *disp)
 
     penWlabel = new QLabel(this);
     penWlabel->setText("Ширина кисти: " + QString::number(disp->getPenW()));
+    penWslider->setValue(disp->getPenW());
 
     penHlabel = new QLabel(this);
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
+    penHslider->setValue(disp->getPenH());
 
     clear = new QPushButton("clear", this);
     connect(clear, &QPushButton::released, this, &Tools::clearReleased);
@@ -46,6 +48,8 @@ void Tools::update()
 {
     penWlabel->setText("Ширина кисти: " + QString::number(disp->getPenW()));
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
+    penWslider->setValue(disp->getPenW());
+    penHslider->setValue(disp->getPenH());
 }
 
 void Tools::penWsliderMoved()
