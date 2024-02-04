@@ -17,9 +17,11 @@ public:
     Tools(QWidget *parent, Display *disp);
     void resize();
 
-    void update();
+    void updateLabels();
+    void updateSliders();
 
 private slots:
+    void penSliderMoved();
     void penWsliderMoved();
     void penHsliderMoved();
     void clearReleased();
@@ -29,6 +31,7 @@ private slots:
 private:
     Display *disp;
 
+    QSlider *penSlider;
     QSlider *penWslider;
     QSlider *penHslider;
 

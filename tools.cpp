@@ -5,6 +5,11 @@ Tools::Tools(QWidget *parent, Display *disp)
 {
     this->disp = disp;
 
+    penSlider = new QSlider(this);
+    penSlider->setMaximum(50);
+    penSlider->setOrientation(Qt::Horizontal);
+    connect(penSlider, &QSlider::sliderMoved, this, &Tools::penSliderMoved);
+
     penWslider = new QSlider(this);
     penWslider->setMaximum(50);
     penWslider->setOrientation(Qt::Horizontal);
@@ -35,6 +40,7 @@ Tools::Tools(QWidget *parent, Display *disp)
 
 void Tools::resize()
 {
+    penSlider->setGeometry(width() * 0.1, height() * 0.4, width() * 0.75, height() * 0.1);
     penWslider->setGeometry(width() * 0.1, height() * 0.8, width() * 0.75, height() * 0.1);
     penHslider->setGeometry(width() * 0.1, height() * 0.6, width() * 0.75, height() * 0.1);
     penWlabel->setGeometry(width() * 0.1, height() * 0.77, width() * 0.75, height() * 0.03);
@@ -44,25 +50,37 @@ void Tools::resize()
     nextDrawPB->setGeometry(width() * 0.4, height() * 0.025, width() * 0.25, height() * 0.05);
 }
 
-void Tools::update()
+void Tools::updateLabels()
 {
     penWlabel->setText("Ширина кисти: " + QString::number(disp->getPenW()));
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
+
+}
+
+void Tools::updateSliders()
+{
     penWslider->setValue(disp->getPenW());
     penHslider->setValue(disp->getPenH());
+}
+
+void Tools::penSliderMoved()
+{
+    disp->setPenW(penSlider->value());
+    disp->setPenH(penSlider->value());
+    updateSliders();
 }
 
 void Tools::penWsliderMoved()
 {
     disp->setPenW(penWslider->value());
-    update();
+    updateLabels();
     qDebug() << penWslider->value();
 }
 
 void Tools::penHsliderMoved()
 {
     disp->setPenH(penHslider->value());
-    update();
+    updateLabels();
     qDebug() << penHslider->value();
 }
 
