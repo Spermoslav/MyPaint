@@ -9,12 +9,16 @@
 #include <QSlider>
 #include <QLabel>
 #include <QResizeEvent>
+#include <QGridLayout>
 
+class Tools;
+class ChangePenColor;
 
 class Tools : public QWidget
 {
 public:
     Tools(QWidget *parent, Display *disp);
+    ~Tools();
     void resize();
 
     void updateLabels();
@@ -27,6 +31,7 @@ private slots:
     void clearReleased();
     void backDrawPBReleased();
     void nextDrawPBReleased();
+    void changePenColorPBReleased();
 
 private:
     Display *disp;
@@ -41,6 +46,36 @@ private:
     QPushButton *clear;
     QPushButton *backDrawPB;
     QPushButton *nextDrawPB;
+    QPushButton *changePenColorPB;
+
+    ChangePenColor *cpc;
+
+    bool cpcWidgetOpen;
+};
+
+class ChangePenColor : public QWidget
+{
+
+public:
+    ChangePenColor(Display *disp, QWidget *parent = nullptr);
+
+private slots:
+    void resizeEvent(QResizeEvent *e) override;
+    void blackPBReleased();
+    void whitePBReleased();
+    void redPBReleased();
+    void greenPBReleased();
+    void bluePBReleased();
+
+private:
+    QList<QPushButton*> colors;
+    QList<QString> basicColors;
+    QGridLayout *colorsLay;
+
+    QGroupBox *colorsBox;
+
+    Display *disp;
+
 };
 
 #endif // TOOLS_H

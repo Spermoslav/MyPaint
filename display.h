@@ -10,6 +10,7 @@
 #include <QKeyEvent>
 #include <QPainter>
 #include <QList>
+#include <QColor>
 
 class Display;
 class DrawItem;
@@ -22,6 +23,7 @@ public:
     ~Display();
     void setPenW(int w);
     void setPenH(int h);
+    void setPenColor(QColor pc = QColor(0, 0, 0));
     int getPenW();
     int getPenH();
 
@@ -41,8 +43,9 @@ private slots:
 private:
     QWidget *parent;
     QPainter paint;
- //   QList<DrawItem*> drawItems;
     QList<QList<DrawItem*>> draw;
+    QList<QColor> drawColors;
+    QColor penColor;
 
     bool mousePress;
     bool mouseRelease;

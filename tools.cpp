@@ -36,6 +36,20 @@ Tools::Tools(QWidget *parent, Display *disp)
 
     nextDrawPB = new QPushButton("next", this);
     connect(nextDrawPB, &QPushButton::released, this, &Tools::nextDrawPBReleased);
+
+    changePenColorPB = new QPushButton("changePenColor", this);
+    connect(changePenColorPB, &QPushButton::released, this, &Tools::changePenColorPBReleased);
+
+    cpc = new ChangePenColor(disp);
+    cpc->setGeometry(50, 50, 500, 500);
+    cpc->show();
+
+    cpcWidgetOpen = false;
+}
+
+Tools::~Tools()
+{
+    delete cpc;
 }
 
 void Tools::resize()
@@ -48,6 +62,7 @@ void Tools::resize()
     clear->setGeometry(width() * 0.1, height() * 0.95, width() * 0.325, height() * 0.05);
     backDrawPB->setGeometry(width() * 0.1, height() * 0.025, width() * 0.25, height() * 0.05);
     nextDrawPB->setGeometry(width() * 0.4, height() * 0.025, width() * 0.25, height() * 0.05);
+    changePenColorPB->setGeometry(width() * 0.1, height() * 0.08, width() * 0.8, height() * 0.05);
 }
 
 void Tools::updateLabels()
@@ -98,4 +113,82 @@ void Tools::backDrawPBReleased()
 void Tools::nextDrawPBReleased()
 {
     disp->nextDraw();
+}
+
+void Tools::changePenColorPBReleased()
+{
+    if(cpcWidgetOpen){
+        cpcWidgetOpen = false;
+        cpc->hide();
+    }
+    else {
+        cpcWidgetOpen = true;
+        cpc->show();
+    }
+}
+
+ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
+    : QWidget(parent)
+{
+    this->disp = disp;
+
+    colorsBox = new QGroupBox(this);
+    colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.8, height() * 0.15);
+
+    colorsLay = new QGridLayout(colorsBox);
+    colorsLay->setSpacing(width() * 0.1);
+    colorsLay->setContentsMargins(0, 0, 0, 0);
+
+    basicColors.append("black");
+    basicColors.append("white");
+    basicColors.append("red");
+    basicColors.append("green");
+    basicColors.append("blue");
+
+    for(int i = 0; i < 5; i++) {
+        colors.append(new QPushButton(this));
+        colors.at(i)->setStyleSheet("background-color: " + basicColors.at(i) + ";"
+                                    "border: 1px solid black;");
+    }
+
+    connect(colors.at(0), &QPushButton::released, this, &ChangePenColor::blackPBReleased);
+    connect(colors.at(1), &QPushButton::released, this, &ChangePenColor::whitePBReleased);
+    connect(colors.at(2), &QPushButton::released, this, &ChangePenColor::redPBReleased);
+    connect(colors.at(3), &QPushButton::released, this, &ChangePenColor::greenPBReleased);
+    connect(colors.at(4), &QPushButton::released, this, &ChangePenColor::bluePBReleased);
+
+    for(int i = 0; i < colors.size(); i++){
+        colorsLay->addWidget(colors.at(i), 0, i);
+    }
+
+}
+
+void ChangePenColor::resizeEvent(QResizeEvent *e)
+{
+    colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.98, height() * 0.15);
+}
+
+void ChangePenColor::blackPBReleased()
+{
+    disp->setPenColor(Qt::black);
+}
+
+void ChangePenColor::whitePBReleased()
+{
+    disp->setPenColor(Qt::white);
+}
+
+void ChangePenColor::redPBReleased()
+{
+    disp->setPenColor(Qt::red);
+}
+
+void ChangePenColor::greenPBReleased()
+{
+    disp->setPenColor(Qt::green);
+}
+
+void ChangePenColor::bluePBReleased()
+{
+    disp->setPenColor(Qt::blue);
 }

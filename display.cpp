@@ -4,6 +4,7 @@ Display::Display(QWidget *parent)
     : QWidget(parent)
 {
     this->parent = parent;
+    penColor = QColor(0, 0, 0);
     mousePress = false;
     mouseRelease = true;
     ctrlPress = false;
@@ -33,10 +34,12 @@ void Display::mousePressEvent(QMouseEvent *event)
             qDebug() << draw.size();
         }
         draw.removeAt(draw.size() - 1);
+        drawColors.removeAt(drawColors.size() - 1);
     }
     deletedItems = 0;
     QList<DrawItem*> drawitems;
     draw.append(drawitems);
+    drawColors.append(penColor);
 }
 
 void Display::mouseReleaseEvent(QMouseEvent *event)
@@ -98,14 +101,13 @@ void Display::paintEvent(QPaintEvent *e)
         for(int i = 0; i < draw.size() - deletedItems; i++) {
             for(int j = 0; j < draw.at(i).size(); j++) {
                 paint.begin(this);
-                paint.setBrush(QBrush(QColor(0, 0, 0)));
+                paint.setBrush(QBrush(drawColors.at(i)));
+                paint.setPen(Qt::NoPen);
                 paint.drawEllipse(draw.at(i).at(j)->px, draw.at(i).at(j)->py, draw.at(i).at(j)->w, draw.at(i).at(j)->h);
 
                 paint.end();
             }
         }
-        qDebug() << draw.size();
-        qDebug() << deletedItems;
     }
 }
 
@@ -121,6 +123,11 @@ void Display::setPenH(int h)
     penH = h;
 }
 
+void Display::setPenColor(QColor pc)
+{
+    penColor = pc;
+}
+
 int Display::getPenW()
 {
     return penW;
@@ -134,6 +141,7 @@ int Display::getPenH()
 void Display::clear()
 {
     draw.clear();
+    drawColors.clear();
     deletedItems = 0;
     repaint();
 }
