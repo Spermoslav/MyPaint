@@ -165,11 +165,11 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     blueSlider = new QSlider;
     blueSlider->setOrientation(Qt::Horizontal);
 
-    redTE = new QTextEdit;
+    redSpinBox = new QSpinBox;
 
-    greenTE = new QTextEdit;
+    greenSpinBox = new QSpinBox;
 
-    blueTE = new QTextEdit;
+    blueSpinBox = new QSpinBox;
 
     colorsLay = new QGridLayout(colorsBox);
     colorsLay->setSpacing(width() * 0.1);
@@ -182,11 +182,11 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     rgbLay->setSpacing(10);
     rgbLay->setContentsMargins(10, 10, 10, 10);
     rgbLay->addWidget(redSlider, 0, 0);
-    rgbLay->addWidget(redTE, 0, 1);
+    rgbLay->addWidget(redSpinBox, 0, 1);
     rgbLay->addWidget(greenSlider, 1, 0);
-    rgbLay->addWidget(greenTE, 1, 1);
+    rgbLay->addWidget(greenSpinBox, 1, 1);
     rgbLay->addWidget(blueSlider, 2, 0);
-    rgbLay->addWidget(blueTE, 2, 1);
+    rgbLay->addWidget(blueSpinBox, 2, 1);
 
 }
 

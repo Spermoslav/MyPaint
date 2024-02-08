@@ -11,6 +11,7 @@
 #include <QResizeEvent>
 #include <QGridLayout>
 #include <QTextEdit>
+#include <QSpinBox>
 
 class Tools;
 class ChangePenColor;
@@ -79,9 +80,9 @@ private:
     QSlider *greenSlider;
     QSlider *blueSlider;
 
-    QTextEdit *redTE;
-    QTextEdit *greenTE;
-    QTextEdit *blueTE;
+    QSpinBox *redSpinBox;
+    QSpinBox *greenSpinBox;
+    QSpinBox *blueSpinBox;
 
     QGridLayout *colorsLay;
     QGridLayout *rgbLay;
