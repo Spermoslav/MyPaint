@@ -135,9 +135,8 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     colorsBox = new QGroupBox(this);
     colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.8, height() * 0.15);
 
-    colorsLay = new QGridLayout(colorsBox);
-    colorsLay->setSpacing(width() * 0.1);
-    colorsLay->setContentsMargins(0, 0, 0, 0);
+    rgbBox = new QGroupBox(this);
+    rgbBox->setGeometry(width() * 0.01, height() * 0.2, width() * 0.8, height() * 0.3);
 
     basicColors.append("black");
     basicColors.append("white");
@@ -157,9 +156,37 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     connect(colors.at(3), &QPushButton::released, this, &ChangePenColor::greenPBReleased);
     connect(colors.at(4), &QPushButton::released, this, &ChangePenColor::bluePBReleased);
 
+    redSlider = new QSlider;
+    redSlider->setOrientation(Qt::Horizontal);
+
+    greenSlider = new QSlider;
+    greenSlider->setOrientation(Qt::Horizontal);
+
+    blueSlider = new QSlider;
+    blueSlider->setOrientation(Qt::Horizontal);
+
+    redTE = new QTextEdit;
+
+    greenTE = new QTextEdit;
+
+    blueTE = new QTextEdit;
+
+    colorsLay = new QGridLayout(colorsBox);
+    colorsLay->setSpacing(width() * 0.1);
+    colorsLay->setContentsMargins(0, 0, 0, 0);
     for(int i = 0; i < colors.size(); i++){
         colorsLay->addWidget(colors.at(i), 0, i);
     }
+
+    rgbLay = new QGridLayout(rgbBox);
+    rgbLay->setSpacing(10);
+    rgbLay->setContentsMargins(10, 10, 10, 10);
+    rgbLay->addWidget(redSlider, 0, 0);
+    rgbLay->addWidget(redTE, 0, 1);
+    rgbLay->addWidget(greenSlider, 1, 0);
+    rgbLay->addWidget(greenTE, 1, 1);
+    rgbLay->addWidget(blueSlider, 2, 0);
+    rgbLay->addWidget(blueTE, 2, 1);
 
 }
 

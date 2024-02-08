@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QResizeEvent>
 #include <QGridLayout>
+#include <QTextEdit>
 
 class Tools;
 class ChangePenColor;
@@ -68,11 +69,22 @@ private slots:
     void bluePBReleased();
 
 private:
+    QGroupBox *colorsBox;
+    QGroupBox *rgbBox;
+
     QList<QPushButton*> colors;
     QList<QString> basicColors;
-    QGridLayout *colorsLay;
 
-    QGroupBox *colorsBox;
+    QSlider *redSlider;
+    QSlider *greenSlider;
+    QSlider *blueSlider;
+
+    QTextEdit *redTE;
+    QTextEdit *greenTE;
+    QTextEdit *blueTE;
+
+    QGridLayout *colorsLay;
+    QGridLayout *rgbLay;
 
     Display *disp;
 
