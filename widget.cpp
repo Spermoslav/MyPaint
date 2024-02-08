@@ -7,7 +7,6 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     disp = new Display(this);
-    disp->setStyleSheet("border: 1px solid black;");
     disp->setGeometry(0, 0, width() / 1.5, height());
 
     tools = new Tools(this, disp);

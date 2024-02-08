@@ -13,7 +13,8 @@ Display::Display(QWidget *parent)
     penW = 22;
     penH = 22;
     deletedItems = 0;
-    this->setStyleSheet("border: 1px solid black;");
+    setStyleSheet("background-color: white;"
+                  "border: 1px solid black;");
 
     qDebug() << size();
     setMouseTracking(true);
