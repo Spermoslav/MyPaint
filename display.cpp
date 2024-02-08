@@ -40,6 +40,8 @@ void Display::mousePressEvent(QMouseEvent *event)
     QList<DrawItem*> drawitems;
     draw.append(drawitems);
     drawColors.append(penColor);
+
+    qDebug() << penColor;
 }
 
 void Display::mouseReleaseEvent(QMouseEvent *event)
@@ -136,6 +138,11 @@ int Display::getPenW()
 int Display::getPenH()
 {
     return penH;
+}
+
+QColor Display::getPenColor()
+{
+    return penColor;
 }
 
 void Display::clear()

@@ -61,6 +61,9 @@ class ChangePenColor : public QWidget
 public:
     ChangePenColor(Display *disp, QWidget *parent = nullptr);
 
+    void updateSpinBoxes();
+    void updateSliders();
+
 private slots:
     void resizeEvent(QResizeEvent *e) override;
     void blackPBReleased();
@@ -68,6 +71,14 @@ private slots:
     void redPBReleased();
     void greenPBReleased();
     void bluePBReleased();
+
+    void redSliderMoved();
+    void greenSliderMoved();
+    void blueSliderMoved();
+
+    void redSpinBoxValueChanged();
+    void greenSpinBoxValueChanged();
+    void blueSpinBoxValueChanged();
 
 private:
     QGroupBox *colorsBox;

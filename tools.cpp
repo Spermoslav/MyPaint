@@ -158,18 +158,33 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
 
     redSlider = new QSlider;
     redSlider->setOrientation(Qt::Horizontal);
+    redSlider->setMaximum(255);
+    connect(redSlider, &QSlider::sliderMoved, this, &ChangePenColor::redSliderMoved);
 
     greenSlider = new QSlider;
     greenSlider->setOrientation(Qt::Horizontal);
+    greenSlider->setMaximum(255);
+    connect(greenSlider, &QSlider::sliderMoved, this, &ChangePenColor::greenSliderMoved);
 
     blueSlider = new QSlider;
     blueSlider->setOrientation(Qt::Horizontal);
+    blueSlider->setMaximum(255);
+    connect(blueSlider, &QSlider::sliderMoved, this, &ChangePenColor::blueSliderMoved);
 
     redSpinBox = new QSpinBox;
+    redSpinBox->setMaximum(255);
+    redSpinBox->setMinimum(0);
+    connect(redSpinBox, &QSpinBox::valueChanged, this, &ChangePenColor::redSpinBoxValueChanged);
 
     greenSpinBox = new QSpinBox;
+    greenSpinBox->setValue(1);
+    greenSpinBox->setMaximum(255);
+    greenSpinBox->setMinimum(0);
+
 
     blueSpinBox = new QSpinBox;
+    blueSpinBox->setMaximum(255);
+    blueSpinBox->setMinimum(0);
 
     colorsLay = new QGridLayout(colorsBox);
     colorsLay->setSpacing(width() * 0.1);
@@ -188,6 +203,20 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     rgbLay->addWidget(blueSlider, 2, 0);
     rgbLay->addWidget(blueSpinBox, 2, 1);
 
+}
+
+void ChangePenColor::updateSpinBoxes()
+{
+    redSpinBox->setValue(redSlider->value());
+    greenSpinBox->setValue(greenSlider->value());
+    blueSpinBox->setValue(blueSlider->value());
+}
+
+void ChangePenColor::updateSliders()
+{
+    redSlider->setValue(redSpinBox->value());
+    greenSlider->setValue(greenSpinBox->value());
+    blueSlider->setValue(blueSpinBox->value());
 }
 
 void ChangePenColor::resizeEvent(QResizeEvent *e)
@@ -218,4 +247,40 @@ void ChangePenColor::greenPBReleased()
 void ChangePenColor::bluePBReleased()
 {
     disp->setPenColor(Qt::blue);
+}
+
+void ChangePenColor::redSliderMoved()
+{
+    disp->setPenColor(QColor(redSlider->value(), disp->getPenColor().green(), disp->getPenColor().blue()));
+    updateSpinBoxes();
+}
+
+void ChangePenColor::greenSliderMoved()
+{
+    disp->setPenColor(QColor(disp->getPenColor().red(), greenSlider->value(), disp->getPenColor().blue()));
+    updateSpinBoxes();
+}
+
+void ChangePenColor::blueSliderMoved()
+{
+    disp->setPenColor(QColor(disp->getPenColor().red(), disp->getPenColor().green(), blueSlider->value()));
+    updateSpinBoxes();
+}
+
+void ChangePenColor::redSpinBoxValueChanged()
+{
+    updateSliders();
+    disp->setPenColor(QColor(redSlider->value(), disp->getPenColor().green(), disp->getPenColor().blue()));
+}
+
+void ChangePenColor::greenSpinBoxValueChanged()
+{
+    updateSliders();
+    disp->setPenColor(QColor(disp->getPenColor().red(), greenSlider->value(), disp->getPenColor().blue()));
+}
+
+void ChangePenColor::blueSpinBoxValueChanged()
+{
+    updateSliders();
+    disp->setPenColor(QColor(disp->getPenColor().red(), disp->getPenColor().green(), blueSlider->value()));
 }
