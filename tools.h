@@ -44,6 +44,7 @@ private:
     QSlider *penWslider;
     QSlider *penHslider;
 
+    QLabel *penSizeLabel;
     QLabel *penWlabel;
     QLabel *penHlabel;
 

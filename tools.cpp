@@ -20,6 +20,9 @@ Tools::Tools(QWidget *parent, Display *disp)
     penHslider->setOrientation(Qt::Horizontal);
     connect(penHslider, &QSlider::sliderMoved, this, &Tools::penHsliderMoved);
 
+    penSizeLabel = new QLabel(this);
+    penSizeLabel->setText("Размер кисти: " + QString::number(penSlider->value()));
+
     penWlabel = new QLabel(this);
     penWlabel->setText("Ширина кисти: " + QString::number(disp->getPenW()));
     penWslider->setValue(disp->getPenW());
@@ -57,6 +60,7 @@ void Tools::resize()
     penSlider->setGeometry(width() * 0.1, height() * 0.4, width() * 0.75, height() * 0.1);
     penWslider->setGeometry(width() * 0.1, height() * 0.8, width() * 0.75, height() * 0.1);
     penHslider->setGeometry(width() * 0.1, height() * 0.6, width() * 0.75, height() * 0.1);
+    penSizeLabel->setGeometry(width() * 0.1, height() * 0.37, width() * 0.75, height() * 0.03);
     penWlabel->setGeometry(width() * 0.1, height() * 0.77, width() * 0.75, height() * 0.03);
     penHlabel->setGeometry(width() * 0.1, height() * 0.57, width() * 0.75, height() * 0.03);
     clear->setGeometry(width() * 0.1, height() * 0.95, width() * 0.325, height() * 0.05);
@@ -69,7 +73,7 @@ void Tools::updateLabels()
 {
     penWlabel->setText("Ширина кисти: " + QString::number(disp->getPenW()));
     penHlabel->setText("Высота кисти: " + QString::number(disp->getPenH()));
-
+    penSizeLabel->setText("Размер кисти: " + QString::number(penSlider->value()));
 }
 
 void Tools::updateSliders()
@@ -82,6 +86,7 @@ void Tools::penSliderMoved()
 {
     disp->setPenW(penSlider->value());
     disp->setPenH(penSlider->value());
+    updateLabels();
     updateSliders();
 }
 
@@ -234,6 +239,7 @@ void ChangePenColor::updateSliders()
 
 void ChangePenColor::resizeEvent(QResizeEvent *e)
 {
+    Q_UNUSED(e)
     colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.98, height() * 0.15);
     penColorBox->setFixedSize(width() * 0.25, height() * 0.25);
     rgbBox->setGeometry(width() * 0.01, height() * 0.2, width() * 0.98, height() * 0.3);
@@ -324,8 +330,9 @@ void ExamplePenColor::updateLabels()
 
 void ExamplePenColor::paintEvent(QPaintEvent *e)
 {
-    QPainter p;
+    Q_UNUSED(e)
 
+    QPainter p;
     p.begin(this);
     p.setBrush(QBrush(disp->getPenColor()));
     p.drawRect(width() / 3, height() / 3, width() / 3, height() / 3);
@@ -337,6 +344,8 @@ void ExamplePenColor::paintEvent(QPaintEvent *e)
 
 void ExamplePenColor::resizeEvent(QResizeEvent *e)
 {
+    Q_UNUSED(e)
+
     repaint();
     rgbValueLabel->setGeometry(width() * 0.08, height() * 0.45, width() * 0.84, height() * 0.6);
     rgbValueLabel->setFont(QFont("", 5));

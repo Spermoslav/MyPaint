@@ -23,11 +23,12 @@ Display::Display(QWidget *parent)
 
 void Display::resizeEvent(QResizeEvent *e)
 {
-
+    Q_UNUSED(e)
 }
 
-void Display::mousePressEvent(QMouseEvent *event)
+void Display::mousePressEvent(QMouseEvent *e)
 {
+    Q_UNUSED(e)
     mousePress = true;
     for(int i = 0; i < deletedItems; i++) {
         for(int j = 0; j < draw.last().size(); j++) {
@@ -45,15 +46,16 @@ void Display::mousePressEvent(QMouseEvent *event)
     qDebug() << penColor;
 }
 
-void Display::mouseReleaseEvent(QMouseEvent *event)
+void Display::mouseReleaseEvent(QMouseEvent *e)
 {
+    Q_UNUSED(e)
     mousePress = false;
 }
 
 void Display::mouseMoveEvent(QMouseEvent *e)
 {
     if(mousePress){
-        draw.last().append(new DrawItem(e->x(), e->y(), penW, penH));
+        draw.last().append(new DrawItem(e->position().x(), e->position().y(), penW, penH));
         mousePress = true;
         mouseRelease = false;
         repaint();
@@ -100,6 +102,7 @@ void Display::keyReleaseEvent(QKeyEvent *e)
 
 void Display::paintEvent(QPaintEvent *e)
 {
+    Q_UNUSED(e)
     if(mousePress || deletedItems >= 0) {
         for(int i = 0; i < draw.size() - deletedItems; i++) {
             for(int j = 0; j < draw.at(i).size(); j++) {
