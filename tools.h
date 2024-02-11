@@ -10,6 +10,8 @@
 #include <QLabel>
 #include <QResizeEvent>
 #include <QGridLayout>
+#include <QTextEdit>
+#include <QSpinBox>
 
 class Tools;
 class ChangePenColor;
@@ -59,6 +61,9 @@ class ChangePenColor : public QWidget
 public:
     ChangePenColor(Display *disp, QWidget *parent = nullptr);
 
+    void updateSpinBoxes();
+    void updateSliders();
+
 private slots:
     void resizeEvent(QResizeEvent *e) override;
     void blackPBReleased();
@@ -67,12 +72,31 @@ private slots:
     void greenPBReleased();
     void bluePBReleased();
 
+    void redSliderMoved();
+    void greenSliderMoved();
+    void blueSliderMoved();
+
+    void redSpinBoxValueChanged();
+    void greenSpinBoxValueChanged();
+    void blueSpinBoxValueChanged();
+
 private:
+    QGroupBox *colorsBox;
+    QGroupBox *rgbBox;
+
     QList<QPushButton*> colors;
     QList<QString> basicColors;
-    QGridLayout *colorsLay;
 
-    QGroupBox *colorsBox;
+    QSlider *redSlider;
+    QSlider *greenSlider;
+    QSlider *blueSlider;
+
+    QSpinBox *redSpinBox;
+    QSpinBox *greenSpinBox;
+    QSpinBox *blueSpinBox;
+
+    QGridLayout *colorsLay;
+    QGridLayout *rgbLay;
 
     Display *disp;
 

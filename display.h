@@ -24,8 +24,10 @@ public:
     void setPenW(int w);
     void setPenH(int h);
     void setPenColor(QColor pc = QColor(0, 0, 0));
+
     int getPenW();
     int getPenH();
+    QColor getPenColor();
 
     void clear();
     void backDraw();
