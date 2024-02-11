@@ -18,6 +18,9 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void resizeEvent(QResizeEvent *e) override;
+
 private:
     Ui::Widget *ui;
 

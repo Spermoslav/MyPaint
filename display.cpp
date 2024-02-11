@@ -10,8 +10,8 @@ Display::Display(QWidget *parent)
     ctrlPress = false;
     zPress = false;
     yPress = false;
-    penW = 22;
-    penH = 22;
+    penW = 10;
+    penH = 10;
     deletedItems = 0;
     setStyleSheet("background-color: white;"
                   "border: 1px solid black;");

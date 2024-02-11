@@ -8,11 +8,12 @@ Tools::Tools(QWidget *parent, Display *disp)
     penSlider = new QSlider(this);
     penSlider->setMaximum(50);
     penSlider->setOrientation(Qt::Horizontal);
+    penSlider->setValue(disp->getPenW());
     connect(penSlider, &QSlider::sliderMoved, this, &Tools::penSliderMoved);
 
     penWslider = new QSlider(this);
     penWslider->setMaximum(50);
-    penWslider->setOrientation(Qt::Horizontal);
+    penWslider->setOrientation(Qt::Horizontal); 
     connect(penWslider, &QSlider::sliderMoved, this, &Tools::penWsliderMoved);
 
     penHslider = new QSlider(this);
@@ -48,6 +49,9 @@ Tools::Tools(QWidget *parent, Display *disp)
     cpc->show();
 
     cpcWidgetOpen = false;
+
+    updateSliders();
+    updateLabels();
 }
 
 Tools::~Tools()
@@ -65,7 +69,7 @@ void Tools::resize()
     penHlabel->setGeometry(width() * 0.1, height() * 0.57, width() * 0.75, height() * 0.03);
     clear->setGeometry(width() * 0.1, height() * 0.95, width() * 0.325, height() * 0.05);
     backDrawPB->setGeometry(width() * 0.1, height() * 0.025, width() * 0.25, height() * 0.05);
-    nextDrawPB->setGeometry(width() * 0.4, height() * 0.025, width() * 0.25, height() * 0.05);
+    nextDrawPB->setGeometry(width() * 0.65, height() * 0.025, width() * 0.25, height() * 0.05);
     changePenColorPB->setGeometry(width() * 0.1, height() * 0.08, width() * 0.8, height() * 0.05);
 }
 
@@ -132,10 +136,16 @@ void Tools::changePenColorPBReleased()
     }
 }
 
+void Tools::resizeEvent(QResizeEvent *e)
+{
+    resize();
+}
+
 ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     : QWidget(parent)
 {
     this->disp = disp;
+    setMinimumSize(250, 250);
 
     colorsBox = new QGroupBox(this);
     colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.8, height() * 0.15);

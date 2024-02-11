@@ -37,6 +37,8 @@ private slots:
     void nextDrawPBReleased();
     void changePenColorPBReleased();
 
+    void resizeEvent(QResizeEvent *e) override;
+
 private:
     Display *disp;
 

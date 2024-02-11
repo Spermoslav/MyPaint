@@ -6,6 +6,8 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    setMinimumSize(400, 400);
+
     disp = new Display(this);
     disp->setGeometry(0, 0, width() / 1.5, height());
 
@@ -18,5 +20,11 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::resizeEvent(QResizeEvent *e)
+{
+    disp->setGeometry(0, 0, width() / 1.5, height());
+    tools->setGeometry(width() / 1.5, 0, width() / 3, height());
 }
 
