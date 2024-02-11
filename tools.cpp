@@ -138,6 +138,10 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     rgbBox = new QGroupBox(this);
     rgbBox->setGeometry(width() * 0.01, height() * 0.2, width() * 0.8, height() * 0.3);
 
+    penColorBox = new ExamplePenColor(this, disp);
+    penColorBox->setFixedSize(width() * 0.25, height() * 0.25);
+
+
     basicColors.append("black");
     basicColors.append("white");
     basicColors.append("red");
@@ -158,17 +162,17 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
 
     redSlider = new QSlider;
     redSlider->setOrientation(Qt::Horizontal);
-    redSlider->setMaximum(255);
+    redSlider->setMaximum(256);
     connect(redSlider, &QSlider::sliderMoved, this, &ChangePenColor::redSliderMoved);
 
     greenSlider = new QSlider;
     greenSlider->setOrientation(Qt::Horizontal);
-    greenSlider->setMaximum(255);
+    greenSlider->setMaximum(256);
     connect(greenSlider, &QSlider::sliderMoved, this, &ChangePenColor::greenSliderMoved);
 
     blueSlider = new QSlider;
     blueSlider->setOrientation(Qt::Horizontal);
-    blueSlider->setMaximum(255);
+    blueSlider->setMaximum(256);
     connect(blueSlider, &QSlider::sliderMoved, this, &ChangePenColor::blueSliderMoved);
 
     redSpinBox = new QSpinBox;
@@ -193,7 +197,7 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
         colorsLay->addWidget(colors.at(i), 0, i);
     }
 
-    rgbLay = new QGridLayout(rgbBox);
+    rgbLay = new QGridLayout;
     rgbLay->setSpacing(10);
     rgbLay->setContentsMargins(10, 10, 10, 10);
     rgbLay->addWidget(redSlider, 0, 0);
@@ -203,6 +207,13 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     rgbLay->addWidget(blueSlider, 2, 0);
     rgbLay->addWidget(blueSpinBox, 2, 1);
 
+
+    changeRgbTools = new QHBoxLayout(rgbBox);
+    changeRgbTools->setSpacing(10);
+    changeRgbTools->setContentsMargins(10, 10, 10, 10);
+    changeRgbTools->addLayout(rgbLay);
+    changeRgbTools->addWidget(penColorBox);
+
 }
 
 void ChangePenColor::updateSpinBoxes()
@@ -210,6 +221,8 @@ void ChangePenColor::updateSpinBoxes()
     redSpinBox->setValue(redSlider->value());
     greenSpinBox->setValue(greenSlider->value());
     blueSpinBox->setValue(blueSlider->value());
+    penColorBox->repaint();
+    penColorBox->updateLabels();
 }
 
 void ChangePenColor::updateSliders()
@@ -222,6 +235,9 @@ void ChangePenColor::updateSliders()
 void ChangePenColor::resizeEvent(QResizeEvent *e)
 {
     colorsBox->setGeometry(width() * 0.01, height() * 0.01, width() * 0.98, height() * 0.15);
+    penColorBox->setFixedSize(width() * 0.25, height() * 0.25);
+    rgbBox->setGeometry(width() * 0.01, height() * 0.2, width() * 0.98, height() * 0.3);
+    repaint();
 }
 
 void ChangePenColor::blackPBReleased()
@@ -283,4 +299,45 @@ void ChangePenColor::blueSpinBoxValueChanged()
 {
     updateSliders();
     disp->setPenColor(QColor(disp->getPenColor().red(), disp->getPenColor().green(), blueSlider->value()));
+}
+
+ExamplePenColor::ExamplePenColor(QWidget *parent, Display *disp)
+    : QGroupBox(parent)
+{
+    this->disp = disp;
+    borderColor = 200;
+
+    rgbValue = "rgb(" + QString::number(disp->getPenColor().red())
+            + ", " + QString::number(disp->getPenColor().green()) + ", " + QString::number(disp->getPenColor().blue()) + ")";
+
+    rgbValueLabel = new QLabel(this);
+    rgbValueLabel->setText(rgbValue);
+    rgbValueLabel->setAlignment(Qt::AlignCenter);
+}
+
+void ExamplePenColor::updateLabels()
+{
+    rgbValue = "rgb(" + QString::number(disp->getPenColor().red())
+            + ", " + QString::number(disp->getPenColor().green()) + ", " + QString::number(disp->getPenColor().blue()) + ")";
+    rgbValueLabel->setText(rgbValue);
+}
+
+void ExamplePenColor::paintEvent(QPaintEvent *e)
+{
+    QPainter p;
+
+    p.begin(this);
+    p.setBrush(QBrush(disp->getPenColor()));
+    p.drawRect(width() / 3, height() / 3, width() / 3, height() / 3);
+    p.setBrush(Qt::NoBrush);
+    p.setPen(QColor(borderColor, borderColor, borderColor));
+    p.drawRect(0, 0, width() - 1, height() - 1);
+    p.end();
+}
+
+void ExamplePenColor::resizeEvent(QResizeEvent *e)
+{
+    repaint();
+    rgbValueLabel->setGeometry(width() * 0.08, height() * 0.45, width() * 0.84, height() * 0.6);
+    rgbValueLabel->setFont(QFont("", 5));
 }

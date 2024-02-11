@@ -10,11 +10,13 @@
 #include <QLabel>
 #include <QResizeEvent>
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QTextEdit>
 #include <QSpinBox>
 
 class Tools;
 class ChangePenColor;
+class ExamplePenColor;
 
 class Tools : public QWidget
 {
@@ -66,6 +68,8 @@ public:
 
 private slots:
     void resizeEvent(QResizeEvent *e) override;
+
+
     void blackPBReleased();
     void whitePBReleased();
     void redPBReleased();
@@ -83,6 +87,7 @@ private slots:
 private:
     QGroupBox *colorsBox;
     QGroupBox *rgbBox;
+    ExamplePenColor *penColorBox;
 
     QList<QPushButton*> colors;
     QList<QString> basicColors;
@@ -98,8 +103,31 @@ private:
     QGridLayout *colorsLay;
     QGridLayout *rgbLay;
 
+    QHBoxLayout *changeRgbTools;
+
     Display *disp;
 
+};
+
+class ExamplePenColor : public QGroupBox
+{
+
+public:
+    ExamplePenColor(QWidget *parent, Display *disp);
+
+    void updateLabels();
+
+private slots:
+    void paintEvent(QPaintEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
+private:
+    Display *disp;
+
+    QString rgbValue;
+
+    QLabel *rgbValueLabel;
+
+    int borderColor;
 };
 
 #endif // TOOLS_H
