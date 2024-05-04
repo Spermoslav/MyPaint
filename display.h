@@ -20,14 +20,13 @@ class Display : public QWidget
     Q_OBJECT
 public:
     Display(QWidget *parent = nullptr);
-    ~Display();
-    void setPenW(int w);
-    void setPenH(int h);
-    void setPenColor(QColor pc = QColor(0, 0, 0));
+    void setPenW(int w) { penW = w; }
+    void setPenH(int h) { penH = h; }
+    void setPenColor(QColor pc = QColor(0, 0, 0)) { penColor = pc; }
 
-    int getPenW();
-    int getPenH();
-    QColor getPenColor();
+    int getPenW() const { return penW; }
+    int getPenH() const { return penH; }
+    QColor getPenColor() const { return penColor; }
 
     void clear();
     void backDraw();
@@ -67,16 +66,11 @@ class DrawItem
 public:
     DrawItem(int px, int py, int w, int h);
 
-private slots:
-
-
 private:
-
     int w;
     int h;
     int px;
     int py;
-
 };
 
 #endif // DISPLAY_H

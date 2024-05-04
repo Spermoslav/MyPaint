@@ -46,17 +46,9 @@ Tools::Tools(QWidget *parent, Display *disp)
 
     cpc = new ChangePenColor(disp);
     cpc->setGeometry(50, 50, 500, 500);
-    cpc->show();
-
-    cpcWidgetOpen = false;
 
     updateSliders();
     updateLabels();
-}
-
-Tools::~Tools()
-{
-    delete cpc;
 }
 
 void Tools::resize()
@@ -111,7 +103,6 @@ void Tools::penHsliderMoved()
 void Tools::clearReleased()
 {
     disp->clear();
-
 }
 
 void Tools::backDrawPBReleased()
@@ -126,18 +117,12 @@ void Tools::nextDrawPBReleased()
 
 void Tools::changePenColorPBReleased()
 {
-    if(cpcWidgetOpen){
-        cpcWidgetOpen = false;
-        cpc->hide();
-    }
-    else {
-        cpcWidgetOpen = true;
-        cpc->show();
-    }
+    cpc->show();
 }
 
 void Tools::resizeEvent(QResizeEvent *e)
 {
+    Q_UNUSED(e)
     resize();
 }
 
@@ -155,7 +140,6 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
 
     penColorBox = new ExamplePenColor(this, disp);
     penColorBox->setFixedSize(width() * 0.25, height() * 0.25);
-
 
     basicColors.append("black");
     basicColors.append("white");
@@ -200,7 +184,6 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     greenSpinBox->setMaximum(255);
     greenSpinBox->setMinimum(0);
 
-
     blueSpinBox = new QSpinBox;
     blueSpinBox->setMaximum(255);
     blueSpinBox->setMinimum(0);
@@ -221,7 +204,6 @@ ChangePenColor::ChangePenColor(Display *disp, QWidget *parent)
     rgbLay->addWidget(greenSpinBox, 1, 1);
     rgbLay->addWidget(blueSlider, 2, 0);
     rgbLay->addWidget(blueSpinBox, 2, 1);
-
 
     changeRgbTools = new QHBoxLayout(rgbBox);
     changeRgbTools->setSpacing(10);

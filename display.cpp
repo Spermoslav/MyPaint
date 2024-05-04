@@ -116,39 +116,6 @@ void Display::paintEvent(QPaintEvent *e)
         }
     }
 }
-
-Display::~Display(){}
-
-void Display::setPenW(int w)
-{
-    penW = w;
-}
-
-void Display::setPenH(int h)
-{
-    penH = h;
-}
-
-void Display::setPenColor(QColor pc)
-{
-    penColor = pc;
-}
-
-int Display::getPenW()
-{
-    return penW;
-}
-
-int Display::getPenH()
-{
-    return penH;
-}
-
-QColor Display::getPenColor()
-{
-    return penColor;
-}
-
 void Display::clear()
 {
     draw.clear();

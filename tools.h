@@ -22,7 +22,6 @@ class Tools : public QWidget
 {
 public:
     Tools(QWidget *parent, Display *disp);
-    ~Tools();
     void resize();
 
     void updateLabels();
@@ -56,8 +55,6 @@ private:
     QPushButton *changePenColorPB;
 
     ChangePenColor *cpc;
-
-    bool cpcWidgetOpen;
 };
 
 class ChangePenColor : public QWidget
@@ -69,9 +66,9 @@ public:
     void updateSpinBoxes();
     void updateSliders();
 
+
 private slots:
     void resizeEvent(QResizeEvent *e) override;
-
 
     void blackPBReleased();
     void whitePBReleased();
@@ -109,7 +106,6 @@ private:
     QHBoxLayout *changeRgbTools;
 
     Display *disp;
-
 };
 
 class ExamplePenColor : public QGroupBox
